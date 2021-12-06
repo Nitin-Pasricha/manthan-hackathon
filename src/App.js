@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import NotFound from "./pages/NotFound/NotFound";
+import Profile from "./pages/Profile/Profile";
 
 import "./App.css";
 
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Auth />} />
           <Route path="/signup" element={<Auth signup />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
