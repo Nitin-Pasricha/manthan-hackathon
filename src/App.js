@@ -39,7 +39,7 @@ function App() {
           </Routes>
         ) : (
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/dashboard/profile/:userId/:name"
               element={<Profile />}
