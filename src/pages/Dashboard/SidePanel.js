@@ -6,13 +6,15 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import pic from "./dp.svg";
 
 const SidePanel = () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   return (
     <section className="admin-panel">
       <div className="profile">
         <img className="profile-pic" src={pic} alt="detective" />
         <article>
-          <h3>Rosy Fernando</h3>
-          <p>Chief Detective</p>
+          <h3>{user && `${user.firstName} ${user.lastName} `}</h3>
+          <p>{user && user.email}</p>
         </article>
       </div>
       <Icons />
@@ -23,15 +25,22 @@ const SidePanel = () => {
 const Icons = () => {
   return (
     <div className="icons">
-      <div className="icon">
+      <div className="icon" style={{ background: "#94a8b6" }}>
         <MdDashboard className="ic" />
         <p>Dashboard</p>
       </div>
-      <div className="icon" onClick={() => localStorage.clear()}>
+      <div className="icon">
         <RiLogoutBoxLine className="ic" />
-        <Link to="/">
-          <p>Log out</p>
-        </Link>
+
+        <p
+          onClick={() => {
+            console.log("log");
+            localStorage.clear();
+            window.location.replace("/");
+          }}
+        >
+          Log out
+        </p>
       </div>
     </div>
   );

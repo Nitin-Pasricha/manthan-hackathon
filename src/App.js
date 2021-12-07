@@ -42,6 +42,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/dashboard/profile/:userId" element={<Profile />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         )}
