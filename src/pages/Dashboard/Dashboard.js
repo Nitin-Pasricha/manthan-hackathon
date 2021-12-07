@@ -33,6 +33,7 @@ const Finder = () => {
   const dataFetching = async () => {
     const response = await fetch(url)
     const data = await response.json()
+    console.log(data)
     setSearchResult(data)
     setIsLoading(false)
   }
@@ -60,6 +61,7 @@ const Finder = () => {
             type='search'
             id='search-box'
             name='search-box'
+            className='basic-input'
             value={id_phone}
             placeholder='Enter email-id or phone no.'
             onChange={(e) => setId_phone(e.target.value)}
@@ -77,22 +79,26 @@ const Finder = () => {
             <h4>Waiting to search</h4>
           </div>
         )}
-        {isLoading && <Spinner />}
+        {isLoading && (
+          <div style={{ padding: '80px' }}>
+            <Spinner />
+          </div>
+        )}
         {!isLoading &&
           Object.keys(searchResult).length > 0 &&
           searchResult.status && (
             <div className='result'>
               <div className='column'>
                 <h3>First Name</h3>
-                <p>{searchResult.data.firstName}</p>
+                <p>{searchResult.data[0].firstName}</p>
               </div>
               <div className='column'>
                 <h3>Last Name</h3>
-                <p>{searchResult.data.lastName}</p>
+                <p>{searchResult.data[0].lastName}</p>
               </div>
               <div className='column'>
                 <h3>Account Type</h3>
-                <p>{searchResult.data.dbType}</p>
+                <p>{searchResult.data[0].dbType}</p>
               </div>
               <div className='column'>
                 <h3>Action required</h3>
