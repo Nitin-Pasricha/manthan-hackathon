@@ -1,51 +1,54 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
-} from 'react-router-dom'
+} from "react-router-dom";
 
-import Auth from './pages/Auth/Auth'
-import NotFound from './pages/NotFound/NotFound'
-import Dashboard from './pages/Dashboard/Dashboard'
-import Home from './pages/Home/Home'
-import './App.css'
+import Auth from "./pages/Auth/Auth";
+import Profile from "./pages/Profile/Profile";
+import NotFound from "./pages/NotFound/NotFound";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Home from "./pages/Home/Home";
+import "./App.css";
 
 function App() {
-  const user = JSON.parse(localStorage.getItem('user'))
-  console.log(user)
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
   const [isLoggedIn, setIsLoggedIn] = useState(
     user && user.token ? true : false
-  )
+  );
 
-  console.log(isLoggedIn)
+  console.log(isLoggedIn);
   return (
-    <div className='App'>
+    <div className="App">
       <Router>
         {!isLoggedIn ? (
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route
-              path='/login'
+              path="/login"
               element={<Auth changeLoggedIn={setIsLoggedIn} />}
             />
             <Route
-              path='/signup'
+              path="/signup"
               element={<Auth signup changeLoggedIn={setIsLoggedIn} />}
             />
-            <Route path='*' element={<Navigate to='/' />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         ) : (
           <Routes>
-            <Route path='/' element={<Navigate to='/dashboard' />} />
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='*' element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/profile/:userId" element={<Profile />} />
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         )}
       </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
