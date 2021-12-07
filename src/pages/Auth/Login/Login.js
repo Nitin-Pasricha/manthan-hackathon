@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa'
 
 import Button from '../../../components/Button/Button'
 import InputControl from '../../../components/InputControl/InputControl'
@@ -97,7 +98,9 @@ function Login(props) {
       <img src={signIn} alt='sign-in' className={styles['logo']} />
       <div className={styles['signin-form']}>
         <h1 className={styles['signin-form_head']}>Log in</h1>
-        <h3 className={styles['signin-form_sub-head']}>Futuristic</h3>
+        <h3 className={styles['signin-form_sub-head']}>
+          <FaSearch /> Finder
+        </h3>
         <form
           onSubmit={(e) => {
             submission(e)

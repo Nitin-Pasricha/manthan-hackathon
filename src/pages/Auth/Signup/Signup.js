@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaSearch } from 'react-icons/fa'
 
 import Button from '../../../components/Button/Button'
 import InputControl from '../../../components/InputControl/InputControl'
@@ -7,7 +8,8 @@ import signUp from '../../../welcome.svg'
 
 import styles from '../Auth.module.css'
 
-function Signup() {
+function Signup(props) {
+  let navigate = useNavigate()
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [email, setEmail] = useState('')
@@ -20,6 +22,45 @@ function Signup() {
   })
   const [errorMessage, setErrorMessage] = useState('')
   const [loginButtonDisabled, setLoginButtonDisabled] = useState(false)
+
+  const authenticate = () => {
+    fetch(' https://manthan-futuristic.herokuapp.com/auth/register', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        firstName: fname,
+        lastName: lname,
+        email: email,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setLoginButtonDisabled(false)
+
+        if (!res.status) {
+          setErrorMessage(res.message)
+        } else {
+          if (props.changeLoggedIn) {
+            props.changeLoggedIn(true)
+          }
+          const user = {
+            token: res.data?.authToken,
+            firstName: res.data?.firstName,
+            lastName: res.data?.lastName,
+            email: res.data?.email,
+          }
+          localStorage.setItem('user', JSON.stringify(user))
+          navigate('/dashboard')
+        }
+      })
+      .catch((err) => {
+        setErrorMessage('Error connecting to server')
+        setLoginButtonDisabled(false)
+      })
+  }
 
   const validateForm = () => {
     const emailRegex =
@@ -35,10 +76,8 @@ function Signup() {
 
     if (email.trim() === '') {
       errors.email = 'Enter Email'
-    } else if (emailRegex.test(String(email).toLowerCase())) {
-      errors.email = 'Account already exists'
-    } else {
-      errors.email = ''
+    } else if (!emailRegex.test(String(email).toLowerCase())) {
+      errors.email = 'Invalid Email'
     }
 
     if (!password) {
@@ -65,19 +104,22 @@ function Signup() {
     }
     setErrorMessage('')
 
-    if (!validateForm()) {
-      return
-    }
-
-    // disable login button while calling api
-    // setLoginButtonDisabled(true);
+    if (!validateForm()) return
+    setLoginButtonDisabled(true)
+    authenticate()
   }
+
+  // disable login button while calling api
+  // setLoginButtonDisabled(true);
+
   return (
     <section className={styles['login']}>
       <img src={signUp} alt='sign-up' className={styles['logo']} />
       <div className={styles['signin-form']}>
         <h1 className={styles['signin-form_head']}>Sign up</h1>
-        <h3 className={styles['signin-form_sub-head']}>Futuristic</h3>
+        <h3 className={styles['signin-form_sub-head']}>
+          <FaSearch /> Finder
+        </h3>
         <form onSubmit={(e) => submission(e)}>
           <div className={styles.formFeilds}>
             <InputControl
@@ -87,7 +129,7 @@ function Signup() {
                 setFname(value)
               }}
               placeholder='Rosy'
-              error={errors.email}
+              error={errors.fname}
             />
             <InputControl
               label='Last Name'
@@ -96,7 +138,7 @@ function Signup() {
                 setLname(value)
               }}
               placeholder='Fernando'
-              error={errors.email}
+              error={errors.lname}
             />
             <InputControl
               label='Email'

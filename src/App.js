@@ -38,7 +38,7 @@ function App() {
           </Routes>
         ) : (
           <Routes>
-            <Route path='/' element={<Home />} />
+            <Route path='/' element={<Navigate to='/dashboard' />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
