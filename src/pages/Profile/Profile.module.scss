@@ -40,3 +40,8 @@
   color: #ccc;
   background-color: #ccc;
 }
+.postSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

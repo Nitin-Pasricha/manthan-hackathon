@@ -87,26 +87,28 @@ const Finder = () => {
         {!isLoading &&
           Object.keys(searchResult).length > 0 &&
           searchResult.status && (
-            <div className="result">
+            searchResult.data.map((result)=> 
+            <div className="result" key={result._id}>
               <div className="column">
                 <h3>First Name</h3>
-                <p>{searchResult.data[0].firstName}</p>
+                <p>{result.firstName}</p>
               </div>
               <div className="column">
                 <h3>Last Name</h3>
-                <p>{searchResult.data[0].lastName}</p>
+                <p>{result.lastName}</p>
               </div>
               <div className="column">
                 <h3>Account Type</h3>
-                <p>{searchResult.data[0].dbType}</p>
+                <p>{result.dbType}</p>
               </div>
               <div className="column">
                 <h3>Action required</h3>
-                <Link to={`/dashboard/profile/${searchResult.data._id}`}>
+                <Link to={`/dashboard/profile/${result._id}`}>
                   <p style={{ color: "blue" }}>View Profile</p>
                 </Link>
               </div>
             </div>
+              )
           )}
         {!isLoading &&
           Object.keys(searchResult).length > 0 &&

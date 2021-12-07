@@ -7,10 +7,10 @@ import styles from "./Profile.module.scss";
 
 function Profile() {
   const params = useParams();
-  console.log(params);
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const fetchPosts = async () => {
     const response = await fetch(
@@ -40,18 +40,17 @@ function Profile() {
           alt="profile"
         />
         <div className={styles.information}>
-          <h2>Nitish sharma</h2>
-          <span> New Mexico</span>
+          <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
         </div>
       </div>
       <div className={styles.posts}>
         <h2>Posts</h2>
         <hr className={styles.breakLine} />
-        <div>
+        <div className={styles.postSection}>
           {isLoading ? (
             <Spinner />
           ) : (
-            posts.map((post) => <Post details={post} />)
+            posts?.data?.map((post) => <Post details={post} />)
           )}
         </div>
       </div>
