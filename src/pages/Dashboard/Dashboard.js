@@ -103,7 +103,7 @@ const Finder = () => {
               </div>
               <div className="column">
                 <h3>Action required</h3>
-                <Link to={`/dashboard/profile/${result._id}`}>
+                <Link to={`/dashboard/profile/${result._id}/${result.firstName+ " " + result.lastName}`}>
                   <p style={{ color: "blue" }}>View Profile</p>
                 </Link>
               </div>

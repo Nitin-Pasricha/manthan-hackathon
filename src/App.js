@@ -39,9 +39,11 @@ function App() {
           </Routes>
         ) : (
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/profile/:userId" element={<Profile />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route
+              path="/dashboard/profile/:userId/:name"
+              element={<Profile />}
+            />
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

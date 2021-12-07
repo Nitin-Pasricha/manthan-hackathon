@@ -10,7 +10,6 @@ function Profile() {
 
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
 
   const fetchPosts = async () => {
     const response = await fetch(
@@ -40,7 +39,7 @@ function Profile() {
           alt="profile"
         />
         <div className={styles.information}>
-          <h2>{`${user?.firstName} ${user?.lastName}`}</h2>
+          <h2>{params.name}</h2>
         </div>
       </div>
       <div className={styles.posts}>
