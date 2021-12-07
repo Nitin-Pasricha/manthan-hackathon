@@ -3,8 +3,21 @@
   padding: 20px 30px;
   background-color: #fff;
   text-align: center;
+  width: 400px;
   max-width: 500px;
   margin: 0 auto;
+}
+.login {
+  margin: 5rem auto;
+  width: 90vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.logo {
+  width: 500px;
+  height: auto;
+  margin: auto;
 }
 
 .signin-form_head,

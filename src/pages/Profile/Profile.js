@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import Post from "../../components/Post/Post";
+import Spinner from "../../components/Spinner/Spinner";
 
 import styles from "./Profile.module.scss";
 
 function Profile() {
+  const params = useParams();
+  console.log(params);
+
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchPosts = async () => {
+    const response = await fetch(
+      `https://manthan-futuristic.herokuapp.com/data/user/posts/${params.userId}`
+    );
+    const data = await response.json();
+    if (data?.status === true && data?.data) {
+      setPosts(data);
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+      setPosts([]);
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
     <div className={styles.profile}>
       <div className={styles.headerSection}>
@@ -22,7 +48,11 @@ function Profile() {
         <h2>Posts</h2>
         <hr className={styles.breakLine} />
         <div>
-          <Post />
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            posts.map((post) => <Post details={post} />)
+          )}
         </div>
       </div>
     </div>

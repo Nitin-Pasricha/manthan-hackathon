@@ -1,22 +1,50 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
-import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./pages/Profile/Profile";
-
+import NotFound from "./pages/NotFound/NotFound";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Home from "./pages/Home/Home";
 import "./App.css";
 
 function App() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    user && user.token ? true : false
+  );
+
+  console.log(isLoggedIn);
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/login" element={<Auth />} />
-          <Route path="/signup" element={<Auth signup />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        {!isLoggedIn ? (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/login"
+              element={<Auth changeLoggedIn={setIsLoggedIn} />}
+            />
+            <Route
+              path="/signup"
+              element={<Auth signup changeLoggedIn={setIsLoggedIn} />}
+            />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/profile/:userId" element={<Profile />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        )}
       </Router>
     </div>
   );

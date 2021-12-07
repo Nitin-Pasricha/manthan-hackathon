@@ -1,14 +1,15 @@
-import React from "react";
+import React from 'react'
 
-import styles from "./NotFound.module.css";
+import error from './404-error.svg'
+import styles from './NotFound.module.css'
 
 function NotFound() {
   return (
     <div className={styles.container}>
-      <h1>404</h1>
-      <p>Page not found</p>
+      <img src={error} alt='error 404' className={styles['logo']} />
+      <h1>Page Not Found</h1>
     </div>
-  );
+  )
 }
 
-export default NotFound;
+export default NotFound
