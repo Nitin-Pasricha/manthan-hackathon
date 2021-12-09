@@ -33,7 +33,6 @@ const Finder = () => {
   const dataFetching = async () => {
     const response = await fetch(url);
     const data = await response.json();
-    console.log(data);
     setSearchResult(data);
     setIsLoading(false);
   };
@@ -46,6 +45,9 @@ const Finder = () => {
       dataFetching();
     }
   };
+
+  const requriedData = searchResult?.data;
+
   return (
     <div className="finder">
       <h1>
@@ -84,32 +86,50 @@ const Finder = () => {
             <Spinner />
           </div>
         )}
+
         {!isLoading &&
           Object.keys(searchResult).length > 0 &&
-          searchResult.status && (
-            searchResult.data.map((result)=> 
-            <div className="result" key={result._id}>
+          searchResult.status &&
+          searchResult.data.dbTypes.map((result) => (
+            <div className="result" key={requriedData?._id + result}>
+              <div className="column">
+                {console.log(searchResult.flags[result])}
+                <div
+                  className={`flag ${
+                    searchResult.flags[result] === -3
+                      ? "red"
+                      : searchResult.flags[result] === -2
+                      ? "orange"
+                      : searchResult.flags[result] === -1
+                      ? "yellow"
+                      : "green"
+                  }`}
+                ></div>
+              </div>
               <div className="column">
                 <h3>First Name</h3>
-                <p>{result.firstName}</p>
+                <p>{requriedData.firstName}</p>
               </div>
               <div className="column">
                 <h3>Last Name</h3>
-                <p>{result.lastName}</p>
+                <p>{requriedData.lastName}</p>
               </div>
               <div className="column">
                 <h3>Account Type</h3>
-                <p>{result.dbType}</p>
+                <p>{result}</p>
               </div>
               <div className="column">
                 <h3>Action required</h3>
-                <Link to={`/dashboard/profile/${result._id}/${result.firstName+ " " + result.lastName}`}>
+                <Link
+                  to={`/dashboard/profile/${requriedData._id}/${
+                    requriedData.firstName + " " + requriedData.lastName
+                  }/${result}`}
+                >
                   <p style={{ color: "blue" }}>View Profile</p>
                 </Link>
               </div>
             </div>
-              )
-          )}
+          ))}
         {!isLoading &&
           Object.keys(searchResult).length > 0 &&
           !searchResult.status && (

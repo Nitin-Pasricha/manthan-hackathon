@@ -41,7 +41,7 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route
-              path="/dashboard/profile/:userId/:name"
+              path="/dashboard/profile/:userId/:name/:dbType"
               element={<Profile />}
             />
             <Route path="/" element={<Navigate to="/dashboard" />} />
