@@ -13,7 +13,7 @@ function Profile() {
 
   const fetchPosts = async () => {
     const response = await fetch(
-      `https://manthan-futuristic.herokuapp.com/data/user/posts/${params.userId}`
+      `https://manthan-futuristic.herokuapp.com/data/user/posts/${params.userId}/${params.dbType}`
     );
     const data = await response.json();
     if (data?.status === true && data?.data) {
